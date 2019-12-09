@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.61.0-DEV" />
+    <meta name="description" content="TIBCO Cloud Integration - Flogo">
+<meta name="author" content="rishikeshpalve">
+
+    <link rel="shortcut icon" href="https://www.tibco.com/sites/tibco/files/favicon_0.ico" type="image/vnd.microsoft.icon">
+    <title>activity.go :: TIBCO Cloud Integration - Flogo</title>
+    
+    
+    <link href="/tci-flogo/css/nucleus.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/font-awesome.min.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/hybrid.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/featherlight.min.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/perfect-scrollbar.min.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/auto-complete.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/theme.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/hugo-theme.css?1575884025" rel="stylesheet">
+    
+      <link href="/tci-flogo/css/theme-blue.css?1575884025" rel="stylesheet">
+    
+
+    <script src="/tci-flogo/js/jquery-2.x.min.js?1575884025"></script>
+    
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left{ 
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/tci-flogo/building-extensions/organizing-code/activity-go/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <svg id="icon-logo-tibco" viewBox="0 0 83 32" width="100%" height="100%">
+    <title>logo-tibco</title>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M9.361 6.199v16.837h-2.594v-16.837h-6.766v-2.471h16.126v2.471h-6.766z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M19.215 23.036v-19.308h2.595v19.308h-2.595z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M40.122 17.569c0 3.274-2.194 5.467-7.166 5.467h-6.581v-19.308h6.395c4.666 0 6.734 2.1 6.734 5.128 0 1.978-1.143 3.43-3.306 4.233 2.565 0.648 3.923 2.317 3.923 4.48zM32.986 6.138h-3.985v6.055c0.030 0 3.583 0 3.583 0 2.78 0 4.294-1.235 4.294-3.12 0-1.854-1.359-2.935-3.893-2.935zM32.801 14.571h-3.8v6.055h4.202c2.873 0 4.294-1.020 4.294-3.027 0.001-2.225-1.977-3.028-4.696-3.028z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M57.242 7.25c-1.699-1.112-3.274-1.637-5.282-1.637-4.202 0-7.014 2.904-7.014 7.693s2.842 7.847 7.075 7.847c2.070 0 4.109-0.834 5.467-1.884l0.433 2.626c-1.575 0.989-3.8 1.606-5.962 1.606-5.654 0-9.67-3.923-9.67-10.071s4.048-10.166 9.671-10.166c2.193 0 4.541 0.618 6.117 1.607l-0.835 2.378z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M73.985 4.626c-0.286-0.177-0.584-0.338-0.893-0.482-2.524 4.838-7.11 10.595-13.178 13.87 0.35 0.785 0.793 1.495 1.316 2.125 5.217-3.587 10.049-9.587 12.754-15.512z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M72.863 4.041c-1.248-0.543-2.661-0.834-4.194-0.834-5.676 0-9.686 4.381-9.686 10.149 0 0.973 0.103 1.89 0.298 2.746 5.806-2.367 10.966-7.584 13.582-12.061z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M74.203 4.762c-2.978 7.323-6.607 12.506-11.242 16.964 1.566 1.087 3.515 1.686 5.708 1.686 5.677 0 9.686-4.411 9.686-10.18 0-3.822-1.582-6.787-4.151-8.47z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M78.354 4.122v-0.015c0-1.361 1.103-2.507 2.494-2.507 1.404 0 2.494 1.132 2.494 2.494v0.014c0 1.362-1.103 2.508-2.494 2.508-1.404 0.001-2.494-1.132-2.494-2.493zM83.054 4.107v-0.014c0-1.218-0.946-2.222-2.207-2.222-1.247 0-2.207 1.018-2.207 2.235v0.015c0 1.218 0.946 2.221 2.207 2.221 1.247 0 2.207-1.017 2.207-2.236zM79.873 2.79h1.146c0.559 0 0.975 0.272 0.975 0.802 0 0.416-0.244 0.674-0.588 0.774l0.674 0.96h-0.587l-0.602-0.874h-0.531v0.874h-0.487v-2.536zM80.977 4.050c0.33 0 0.516-0.172 0.516-0.416 0-0.272-0.186-0.415-0.516-0.415h-0.617v0.831h0.617z"></path>
+</svg>
+    </div>
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/introduction/" title="Introduction" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/introduction/">
+          <i class="fa fa-home" aria-hidden="true"></i> Introduction
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/samples/" title="Samples" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/samples/">
+          <i class="fa fa-cogs" aria-hidden="true"></i> Samples
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/tooling/" title="Tooling" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/tooling/">
+          <i class="fa fa-angle-double-right" aria-hidden="true"></i> Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/tooling/tooling/" title="fe-cli" class="dd-item ">
+        <a href="/tci-flogo/tooling/tooling/">
+        <i class="fa fa-terminal" aria-hidden="true"></i> fe-cli
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/" title="Building extensions" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/">
+          <i class="fa fa-wrench" aria-hidden="true"></i> Building extensions
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/getting-started/" title="Getting started" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/getting-started/">
+          <i class="fa fa-bolt" aria-hidden="true"></i> Getting started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/getting-started/prerequisites/" title="Prerequisites" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/getting-started/prerequisites/">
+          Prerequisites
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/prerequisites/flogo/" title="Use Project Flogo activities" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/prerequisites/flogo/">
+        Use Project Flogo activities
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/prerequisites/new-activities/" title="Create new activities" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/prerequisites/new-activities/">
+        Create new activities
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/getting-started/dev-environment/" title="Set up your environment" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/getting-started/dev-environment/">
+          Set up your environment
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/dev-environment/intellij-webstorm/" title="Using IntelliJ WebStorm" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/dev-environment/intellij-webstorm/">
+        Using IntelliJ WebStorm
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/dev-environment/vscode/" title="Using VS Code" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/dev-environment/vscode/">
+        Using VS Code
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/organizing-code/" title="Organizing your code" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/organizing-code/">
+          <i class="fa fa-folder-open" aria-hidden="true"></i> Organizing your code
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/connector-json/" title="connector.json" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/connector-json/">
+        connector.json
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/connector-ts/" title="connector.ts" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/connector-ts/">
+        connector.ts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/activity-json/" title="activity.json" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/activity-json/">
+        activity.json
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/activity-go/" title="activity.go" class="dd-item active">
+        <a href="/tci-flogo/building-extensions/organizing-code/activity-go/">
+        activity.go
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/activity-ts/" title="activity.ts" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/activity-ts/">
+        activity.ts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/trigger-json/" title="trigger.json" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/trigger-json/">
+        trigger.json
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/trigger-ts/" title="trigger.ts" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/trigger-ts/">
+        trigger.ts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/trigger-go/" title="trigger.go" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/trigger-go/">
+        trigger.go
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/display-settings/" title="Display settings" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/display-settings/">
+        Display settings
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/upload/" title="Upload to TCI or FE" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/upload/">
+          <i class="fa fa-upload" aria-hidden="true"></i> Upload to TCI or FE
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/" title="Sample Extensions" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/sample-extensions/">
+          <i class="fa fa-cogs" aria-hidden="true"></i> Sample Extensions
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/" title="Concat" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/sample-extensions/concat/">
+          Concat
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/simple-concat/" title="Simple concat" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/concat/simple-concat/">
+        Simple concat
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/separator-concat/" title="Adding a separator token" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/concat/separator-concat/">
+        Adding a separator token
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/ui-choices-concat/" title="Adding more UI options" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/concat/ui-choices-concat/">
+        Adding more UI options
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/" title="Amazon SQS" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/">
+          Amazon SQS
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-connector/" title="Connector" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-connector/">
+        Connector
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-send-message/" title="Sending a message" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-send-message/">
+        Sending a message
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-receive-message/" title="Receiving a message" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-receive-message/">
+        Receiving a message
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/sdk/" title="SDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/sdk/">
+          <i class="fa fa-list-alt" aria-hidden="true"></i> SDK
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/contribute/" title="Contribute" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/contribute/">
+          <i class="fa fa-share-alt" aria-hidden="true"></i> Contribute
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3></h3>
+        <ul>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://github.com/TIBCOSoftware/tci-flogo"><i class='fa fa-github'></i> Github repo</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://tibcosoftware.github.io/tci-awesome"><i class='fa fa-camera'></i> Showcases</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://integration.cloud.tibco.com/docs/index.html"><i class='fa fa-book'></i> TCI docs</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://docs.tibco.com/products/tibco-flogo-enterprise"><i class='fa fa-book'></i> TIBCO Flogo Enterprise docs</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://tibcosoftware.github.io/tci-flogo/wi-studio/v1.3.0/"><i class='fa fa-book'></i> Designtime API docs v1.3.0</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://tibcosoftware.github.io/tci-flogo/wi-runtime/v1.3.0/pkg/github.com/index.html"><i class='fa fa-book'></i> Runtime API docs v1.3.0</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="footer">
+      <center>
+    
+    <a class="github-button" href="https://github.com/TIBCOSoftware/tci-webintegrator/archive/master.zip" data-icon="octicon-cloud-download" aria-label="Download TIBCOSoftware/tci-flogo on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/TIBCOSoftware/tci-webintegrator" data-icon="octicon-star" data-show-count="true" aria-label="Star TIBCOSoftware/tci-flogo on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/TIBCOSoftware/tci-webintegrator/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork TIBCOSoftware/tci-flogo on GitHub">Fork</a>
+
+</center>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable sticky-parent">
+              
+              <div class="sticky-spacer">
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fa fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/tci-flogo/'></a> > <a href='/tci-flogo/building-extensions/'>Building extensions</a> > <a href='/tci-flogo/building-extensions/organizing-code/'>Organizing your code</a> > activity.go
+          
+         
+          
+         
+          
+         
+          
+           
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#activitygo">activity.go</a></li>
+    <li><a href="#activity-testgo">activity_test.go</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+
+        
+        <div id="body-inner">
+          
+            <h1>activity.go</h1>
+          
+
+        
+
+
+<p>Every extension must write the runtime code in Go (<code>activity.go</code>). You can, and really should, leverage the Go testing framework for writing unit test cases (<code>activity_test.go</code>) for your extension. The code here give you an overview of what files are structured like, but for samples you should really check out the samples section!</p>
+<h2 id="activitygo">activity.go</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Package ifttt provides connectivity to IFTTT for TIBCO Cloud Integration - Flogo
+</span><span style="color:#75715e"></span><span style="color:#75715e">// using the WebHooks service from IFTTT (https://ifttt.com/maker_webhooks)
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">ifttt</span>
+
+<span style="color:#75715e">// Imports
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;bytes&#34;</span>
+	<span style="color:#e6db74">&#34;encoding/json&#34;</span>
+	<span style="color:#e6db74">&#34;net/http&#34;</span>
+	<span style="color:#e6db74">&#34;strconv&#34;</span>
+
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/core/activity&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/logger&#34;</span>
+)
+
+<span style="color:#75715e">// Constants
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">ivConnection</span> = <span style="color:#e6db74">&#34;iftttConnection&#34;</span>
+	<span style="color:#a6e22e">ivValue1</span>     = <span style="color:#e6db74">&#34;value1&#34;</span>
+	<span style="color:#a6e22e">ivValue2</span>     = <span style="color:#e6db74">&#34;value2&#34;</span>
+	<span style="color:#a6e22e">ivValue3</span>     = <span style="color:#e6db74">&#34;value3&#34;</span>
+	<span style="color:#a6e22e">ovResult</span>     = <span style="color:#e6db74">&#34;result&#34;</span>
+)
+
+<span style="color:#75715e">// Payload is used to describe the payload to IFTTT with a maximum of
+</span><span style="color:#75715e"></span><span style="color:#75715e">// three values (this limit is set by IFTTT)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Payload</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Value1</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">json:&#34;value1&#34;</span><span style="color:#e6db74">`</span>
+	<span style="color:#a6e22e">Value2</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">json:&#34;value2&#34;</span><span style="color:#e6db74">`</span>
+	<span style="color:#a6e22e">Value3</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">json:&#34;value3&#34;</span><span style="color:#e6db74">`</span>
+}
+
+<span style="color:#75715e">// activityLog is the default logger for this class
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activityLog</span> = <span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">GetLogger</span>(<span style="color:#e6db74">&#34;ifttt&#34;</span>)
+
+<span style="color:#75715e">// IFTTTActivity describes the metadata of the activity as found in the activity.json file
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">IFTTTActivity</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">metadata</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span>
+}
+
+<span style="color:#75715e">// NewActivity will instantiate a new IFTTTActivity
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewActivity</span>(<span style="color:#a6e22e">metadata</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span>) <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Activity</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">IFTTTActivity</span>{<span style="color:#a6e22e">metadata</span>: <span style="color:#a6e22e">metadata</span>}
+}
+
+<span style="color:#75715e">// Metadata will return the metadata of the IFTTTActivity
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">IFTTTActivity</span>) <span style="color:#a6e22e">Metadata</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">metadata</span>
+}
+
+<span style="color:#75715e">// Eval executes the activity and sends a message to IFTTT
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">IFTTTActivity</span>) <span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">context</span> <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Context</span>) (<span style="color:#a6e22e">done</span> <span style="color:#66d9ef">bool</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">activityLog</span>.<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;Executing IFTTT WebHook&#34;</span>)
+
+	<span style="color:#75715e">// Validates that the connection has been set. The connection is mandatory
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// whereas the three values are optional
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivConnection</span>) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;IFTTT connection is not configured&#34;</span>, <span style="color:#e6db74">&#34;IFTTT-2000&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+
+	<span style="color:#75715e">// Get the connection details
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">connectionInfo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivConnection</span>).(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#a6e22e">connectionSettings</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">connectionInfo</span>[<span style="color:#e6db74">&#34;settings&#34;</span>].([]<span style="color:#66d9ef">interface</span>{})
+
+	<span style="color:#75715e">// Build the IFTTT WebHook URL. To trigger the event it will make a POST request to the URL
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">webhookKey</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">eventName</span> <span style="color:#66d9ef">string</span>
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">connectionSettings</span> {
+		<span style="color:#a6e22e">setting</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;webhookKey&#34;</span> {
+			<span style="color:#a6e22e">webhookKey</span> = <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;value&#34;</span>].(<span style="color:#66d9ef">string</span>)
+		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;eventName&#34;</span> {
+			<span style="color:#a6e22e">eventName</span> = <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;value&#34;</span>].(<span style="color:#66d9ef">string</span>)
+		}
+	}
+
+	<span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;https://maker.ifttt.com/trigger/&#34;</span>, <span style="color:#a6e22e">eventName</span>, <span style="color:#e6db74">&#34;/with/key/&#34;</span>, <span style="color:#a6e22e">webhookKey</span>}
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">str</span> <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">Buffer</span>
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
+		<span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">l</span>)
+	}
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">iftttURL</span> = <span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">String</span>()
+	<span style="color:#a6e22e">activityLog</span>.<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;The WebHook URL is set to &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">iftttURL</span>)
+
+	<span style="color:#75715e">// Create JSON payload. The data is completely optional, and you can also pass value1, value2, and value3 as query parameters or form variables. This content will be passed on to the Action in your Recipe.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">data</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Payload</span>{}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivValue3</span>) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">Value3</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivValue3</span>).(<span style="color:#66d9ef">string</span>)
+	}
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivValue2</span>) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">Value2</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivValue2</span>).(<span style="color:#66d9ef">string</span>)
+	}
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivValue1</span>) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">Value1</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivValue1</span>).(<span style="color:#66d9ef">string</span>)
+	}
+
+	<span style="color:#a6e22e">payloadBytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#a6e22e">data</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;Error occured while creating JSON Payload&#34;</span>, <span style="color:#e6db74">&#34;IFTTT-2001&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+	<span style="color:#a6e22e">body</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">payloadBytes</span>)
+
+	<span style="color:#75715e">// Send the POST message
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#a6e22e">iftttURL</span>, <span style="color:#a6e22e">body</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;Error occured sending message to IFTTT&#34;</span>, <span style="color:#e6db74">&#34;IFTTT-2002&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+	<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>)
+
+	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;Error occured receiving response from IFTTT&#34;</span>, <span style="color:#e6db74">&#34;IFTTT-2003&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+
+	<span style="color:#a6e22e">activityLog</span>.<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;WebHook returned with StatusCode &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>))
+
+	<span style="color:#75715e">// Set the return value
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">SetOutput</span>(<span style="color:#a6e22e">ovResult</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>))
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">nil</span>
+}
+
+</code></pre></div><h2 id="activity-testgo">activity_test.go</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Package ifttt provides connectivity to IFTTT for TIBCO Cloud Integration - Flogo
+</span><span style="color:#75715e"></span><span style="color:#75715e">// using the WebHooks service from IFTTT (https://ifttt.com/maker_webhooks)
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">ifttt</span>
+
+<span style="color:#75715e">// Imports
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+	<span style="color:#e6db74">&#34;testing&#34;</span>
+
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-contrib/action/flow/test&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/core/activity&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/stretchr/testify/assert&#34;</span>
+)
+
+<span style="color:#75715e">// activityMetadata is the metadata of the activity as described in activity.json
+</span><span style="color:#75715e"></span><span style="color:#75715e">// We&#39;ll store it as a variable to reuse it across multiple testcases
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activityMetadata</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span>
+
+<span style="color:#75715e">// getActivityMetadata reads the activity.json file and sets the activityMetadata variable
+</span><span style="color:#75715e"></span><span style="color:#75715e">// if the variable already contains metadata it simply returns the current value rather than reading the file again
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getActivityMetadata</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">activityMetadata</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">jsonMetadataBytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;activity.json&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			panic(<span style="color:#e6db74">&#34;No Json Metadata found for activity.json path&#34;</span>)
+		}
+		<span style="color:#a6e22e">activityMetadata</span> = <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewMetadata</span>(string(<span style="color:#a6e22e">jsonMetadataBytes</span>))
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">activityMetadata</span>
+}
+
+<span style="color:#75715e">// TestActivityRegistration checks whether the activity can be registered, and is registered in the engine
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestActivityRegistration</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">act</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewActivity</span>(<span style="color:#a6e22e">getActivityMetadata</span>())
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">act</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#e6db74">&#34;Activity Not Registered&#34;</span>)
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fail</span>()
+		<span style="color:#66d9ef">return</span>
+	}
+}
+
+<span style="color:#75715e">// TestEval tests the Eval function and sends a message to IFTTT
+</span><span style="color:#75715e"></span><span style="color:#75715e">// Make sure that you have updated the values below
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestEval</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">act</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewActivity</span>(<span style="color:#a6e22e">getActivityMetadata</span>())
+	<span style="color:#a6e22e">tc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">test</span>.<span style="color:#a6e22e">NewTestActivityContext</span>(<span style="color:#a6e22e">act</span>.<span style="color:#a6e22e">Metadata</span>())
+
+	<span style="color:#75715e">// Generate a connection object
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">connectionData</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#a6e22e">connectionSettings</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">interface</span>{}, <span style="color:#ae81ff">2</span>)
+
+	<span style="color:#75715e">// Add a WebHook Key
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">webhookKey</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#a6e22e">webhookKey</span>[<span style="color:#e6db74">&#34;name&#34;</span>] = <span style="color:#e6db74">&#34;webhookKey&#34;</span>
+	<span style="color:#a6e22e">webhookKey</span>[<span style="color:#e6db74">&#34;value&#34;</span>] = <span style="color:#e6db74">&#34;&lt;YOUR WEBHOOK KEY&gt;&#34;</span>
+	<span style="color:#a6e22e">connectionSettings</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#a6e22e">webhookKey</span>
+
+	<span style="color:#75715e">// Add an Event Name
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">eventName</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#a6e22e">eventName</span>[<span style="color:#e6db74">&#34;name&#34;</span>] = <span style="color:#e6db74">&#34;eventName&#34;</span>
+	<span style="color:#a6e22e">eventName</span>[<span style="color:#e6db74">&#34;value&#34;</span>] = <span style="color:#e6db74">&#34;&lt;YOUR EVENT&gt;&#34;</span>
+	<span style="color:#a6e22e">connectionSettings</span>[<span style="color:#ae81ff">1</span>] = <span style="color:#a6e22e">eventName</span>
+
+	<span style="color:#75715e">// Add the settings to the connection
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">connectionData</span>[<span style="color:#e6db74">&#34;settings&#34;</span>] = <span style="color:#a6e22e">connectionSettings</span>
+
+	<span style="color:#75715e">// Specify the input values for the activity
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// These are the constants that start with &#39;iv&#39;
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivConnection</span>, <span style="color:#a6e22e">connectionData</span>)
+	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivValue1</span>, <span style="color:#e6db74">&#34;&lt;VALUE 1&gt;&#34;</span>)
+	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivValue2</span>, <span style="color:#e6db74">&#34;&lt;VALUE 2&gt;&#34;</span>)
+	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivValue3</span>, <span style="color:#e6db74">&#34;&lt;VALUE 3&gt;&#34;</span>)
+
+	<span style="color:#75715e">// Execute the activity
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">act</span>.<span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">tc</span>)
+
+	<span style="color:#75715e">// We assume there will be no errors
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">assert</span>.<span style="color:#a6e22e">Nil</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">err</span>)
+
+	<span style="color:#75715e">// If you&#39;ve provided correct details the return value from IFTTT should be a 200
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">GetOutput</span>(<span style="color:#a6e22e">ovResult</span>)
+	<span style="color:#a6e22e">assert</span>.<span style="color:#a6e22e">Equal</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">result</span>, <span style="color:#e6db74">&#34;200&#34;</span>)
+}
+</code></pre></div>
+
+<footer class=" footline" >
+	
+</footer>
+
+
+        
+        </div> 
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+        
+            <a class="nav nav-prev" href="/tci-flogo/building-extensions/organizing-code/activity-json/" title="activity.json"> <i class="fa fa-chevron-left"></i></a>
+        
+        
+            <a class="nav nav-next" href="/tci-flogo/building-extensions/organizing-code/activity-ts/" title="activity.ts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/tci-flogo/js/clipboard.min.js?1575884025"></script>
+    <script src="/tci-flogo/js/perfect-scrollbar.min.js?1575884025"></script>
+    <script src="/tci-flogo/js/perfect-scrollbar.jquery.min.js?1575884025"></script>
+    <script src="/tci-flogo/js/jquery.sticky-kit.min.js?1575884025"></script>
+    <script src="/tci-flogo/js/featherlight.min.js?1575884025"></script>
+    <script src="/tci-flogo/js/html5shiv-printshiv.min.js?1575884025"></script>
+    <script src="/tci-flogo/js/highlight.pack.js?1575884025"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/tci-flogo/js/modernizr.custom.71422.js?1575884025"></script>
+    <script src="/tci-flogo/js/learn.js?1575884025"></script>
+    <script src="/tci-flogo/js/hugo-learn.js?1575884025"></script>
+
+    <link href="/tci-flogo/mermaid/mermaid.css?1575884025" type="text/css" rel="stylesheet" />
+    <script src="/tci-flogo/mermaid/mermaid.js?1575884025"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+
+  </body>
+</html>
+

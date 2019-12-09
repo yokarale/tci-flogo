@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.61.0-DEV" />
+    <meta name="description" content="TIBCO Cloud Integration - Flogo">
+<meta name="author" content="rishikeshpalve">
+
+    <link rel="shortcut icon" href="https://www.tibco.com/sites/tibco/files/favicon_0.ico" type="image/vnd.microsoft.icon">
+    <title>Sending a message :: TIBCO Cloud Integration - Flogo</title>
+    
+    
+    <link href="/tci-flogo/css/nucleus.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/font-awesome.min.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/hybrid.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/featherlight.min.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/perfect-scrollbar.min.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/auto-complete.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/theme.css?1575884025" rel="stylesheet">
+    <link href="/tci-flogo/css/hugo-theme.css?1575884025" rel="stylesheet">
+    
+      <link href="/tci-flogo/css/theme-blue.css?1575884025" rel="stylesheet">
+    
+
+    <script src="/tci-flogo/js/jquery-2.x.min.js?1575884025"></script>
+    
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left{ 
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-send-message/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <svg id="icon-logo-tibco" viewBox="0 0 83 32" width="100%" height="100%">
+    <title>logo-tibco</title>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M9.361 6.199v16.837h-2.594v-16.837h-6.766v-2.471h16.126v2.471h-6.766z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M19.215 23.036v-19.308h2.595v19.308h-2.595z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M40.122 17.569c0 3.274-2.194 5.467-7.166 5.467h-6.581v-19.308h6.395c4.666 0 6.734 2.1 6.734 5.128 0 1.978-1.143 3.43-3.306 4.233 2.565 0.648 3.923 2.317 3.923 4.48zM32.986 6.138h-3.985v6.055c0.030 0 3.583 0 3.583 0 2.78 0 4.294-1.235 4.294-3.12 0-1.854-1.359-2.935-3.893-2.935zM32.801 14.571h-3.8v6.055h4.202c2.873 0 4.294-1.020 4.294-3.027 0.001-2.225-1.977-3.028-4.696-3.028z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M57.242 7.25c-1.699-1.112-3.274-1.637-5.282-1.637-4.202 0-7.014 2.904-7.014 7.693s2.842 7.847 7.075 7.847c2.070 0 4.109-0.834 5.467-1.884l0.433 2.626c-1.575 0.989-3.8 1.606-5.962 1.606-5.654 0-9.67-3.923-9.67-10.071s4.048-10.166 9.671-10.166c2.193 0 4.541 0.618 6.117 1.607l-0.835 2.378z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M73.985 4.626c-0.286-0.177-0.584-0.338-0.893-0.482-2.524 4.838-7.11 10.595-13.178 13.87 0.35 0.785 0.793 1.495 1.316 2.125 5.217-3.587 10.049-9.587 12.754-15.512z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M72.863 4.041c-1.248-0.543-2.661-0.834-4.194-0.834-5.676 0-9.686 4.381-9.686 10.149 0 0.973 0.103 1.89 0.298 2.746 5.806-2.367 10.966-7.584 13.582-12.061z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M74.203 4.762c-2.978 7.323-6.607 12.506-11.242 16.964 1.566 1.087 3.515 1.686 5.708 1.686 5.677 0 9.686-4.411 9.686-10.18 0-3.822-1.582-6.787-4.151-8.47z"></path>
+    <path fill="#3e8ede" style="fill: var(--color11, #FFFFFF)" d="M78.354 4.122v-0.015c0-1.361 1.103-2.507 2.494-2.507 1.404 0 2.494 1.132 2.494 2.494v0.014c0 1.362-1.103 2.508-2.494 2.508-1.404 0.001-2.494-1.132-2.494-2.493zM83.054 4.107v-0.014c0-1.218-0.946-2.222-2.207-2.222-1.247 0-2.207 1.018-2.207 2.235v0.015c0 1.218 0.946 2.221 2.207 2.221 1.247 0 2.207-1.017 2.207-2.236zM79.873 2.79h1.146c0.559 0 0.975 0.272 0.975 0.802 0 0.416-0.244 0.674-0.588 0.774l0.674 0.96h-0.587l-0.602-0.874h-0.531v0.874h-0.487v-2.536zM80.977 4.050c0.33 0 0.516-0.172 0.516-0.416 0-0.272-0.186-0.415-0.516-0.415h-0.617v0.831h0.617z"></path>
+</svg>
+    </div>
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/introduction/" title="Introduction" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/introduction/">
+          <i class="fa fa-home" aria-hidden="true"></i> Introduction
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/samples/" title="Samples" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/samples/">
+          <i class="fa fa-cogs" aria-hidden="true"></i> Samples
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/tooling/" title="Tooling" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/tooling/">
+          <i class="fa fa-angle-double-right" aria-hidden="true"></i> Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/tooling/tooling/" title="fe-cli" class="dd-item ">
+        <a href="/tci-flogo/tooling/tooling/">
+        <i class="fa fa-terminal" aria-hidden="true"></i> fe-cli
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/" title="Building extensions" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/">
+          <i class="fa fa-wrench" aria-hidden="true"></i> Building extensions
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/getting-started/" title="Getting started" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/getting-started/">
+          <i class="fa fa-bolt" aria-hidden="true"></i> Getting started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/getting-started/prerequisites/" title="Prerequisites" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/getting-started/prerequisites/">
+          Prerequisites
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/prerequisites/flogo/" title="Use Project Flogo activities" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/prerequisites/flogo/">
+        Use Project Flogo activities
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/prerequisites/new-activities/" title="Create new activities" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/prerequisites/new-activities/">
+        Create new activities
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/getting-started/dev-environment/" title="Set up your environment" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/getting-started/dev-environment/">
+          Set up your environment
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/dev-environment/intellij-webstorm/" title="Using IntelliJ WebStorm" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/dev-environment/intellij-webstorm/">
+        Using IntelliJ WebStorm
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/getting-started/dev-environment/vscode/" title="Using VS Code" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/getting-started/dev-environment/vscode/">
+        Using VS Code
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/organizing-code/" title="Organizing your code" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/organizing-code/">
+          <i class="fa fa-folder-open" aria-hidden="true"></i> Organizing your code
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/connector-json/" title="connector.json" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/connector-json/">
+        connector.json
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/connector-ts/" title="connector.ts" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/connector-ts/">
+        connector.ts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/activity-json/" title="activity.json" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/activity-json/">
+        activity.json
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/activity-go/" title="activity.go" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/activity-go/">
+        activity.go
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/activity-ts/" title="activity.ts" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/activity-ts/">
+        activity.ts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/trigger-json/" title="trigger.json" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/trigger-json/">
+        trigger.json
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/trigger-ts/" title="trigger.ts" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/trigger-ts/">
+        trigger.ts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/trigger-go/" title="trigger.go" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/trigger-go/">
+        trigger.go
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/organizing-code/display-settings/" title="Display settings" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/organizing-code/display-settings/">
+        Display settings
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/upload/" title="Upload to TCI or FE" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/upload/">
+          <i class="fa fa-upload" aria-hidden="true"></i> Upload to TCI or FE
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/" title="Sample Extensions" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/sample-extensions/">
+          <i class="fa fa-cogs" aria-hidden="true"></i> Sample Extensions
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/" title="Concat" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/sample-extensions/concat/">
+          Concat
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/simple-concat/" title="Simple concat" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/concat/simple-concat/">
+        Simple concat
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/separator-concat/" title="Adding a separator token" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/concat/separator-concat/">
+        Adding a separator token
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/concat/ui-choices-concat/" title="Adding more UI options" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/concat/ui-choices-concat/">
+        Adding more UI options
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/" title="Amazon SQS" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/">
+          Amazon SQS
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-connector/" title="Connector" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-connector/">
+        Connector
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-send-message/" title="Sending a message" class="dd-item active">
+        <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-send-message/">
+        Sending a message
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-receive-message/" title="Receiving a message" class="dd-item ">
+        <a href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-receive-message/">
+        Receiving a message
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/sdk/" title="SDK" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/sdk/">
+          <i class="fa fa-list-alt" aria-hidden="true"></i> SDK
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tci-flogo/contribute/" title="Contribute" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/tci-flogo/contribute/">
+          <i class="fa fa-share-alt" aria-hidden="true"></i> Contribute
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3></h3>
+        <ul>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://github.com/TIBCOSoftware/tci-flogo"><i class='fa fa-github'></i> Github repo</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://tibcosoftware.github.io/tci-awesome"><i class='fa fa-camera'></i> Showcases</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://integration.cloud.tibco.com/docs/index.html"><i class='fa fa-book'></i> TCI docs</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://docs.tibco.com/products/tibco-flogo-enterprise"><i class='fa fa-book'></i> TIBCO Flogo Enterprise docs</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://tibcosoftware.github.io/tci-flogo/wi-studio/v1.3.0/"><i class='fa fa-book'></i> Designtime API docs v1.3.0</a>
+              </li>
+          
+              <li class="" role=""> 
+                  <a class="padding" href="https://tibcosoftware.github.io/tci-flogo/wi-runtime/v1.3.0/pkg/github.com/index.html"><i class='fa fa-book'></i> Runtime API docs v1.3.0</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="footer">
+      <center>
+    
+    <a class="github-button" href="https://github.com/TIBCOSoftware/tci-webintegrator/archive/master.zip" data-icon="octicon-cloud-download" aria-label="Download TIBCOSoftware/tci-flogo on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/TIBCOSoftware/tci-webintegrator" data-icon="octicon-star" data-show-count="true" aria-label="Star TIBCOSoftware/tci-flogo on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/TIBCOSoftware/tci-webintegrator/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork TIBCOSoftware/tci-flogo on GitHub">Fork</a>
+
+</center>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable sticky-parent">
+              
+              <div class="sticky-spacer">
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fa fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/tci-flogo/'></a> > <a href='/tci-flogo/building-extensions/'>Building extensions</a> > <a href='/tci-flogo/building-extensions/sample-extensions/'>Sample Extensions</a> > <a href='/tci-flogo/building-extensions/sample-extensions/amazon-sqs/'>Amazon SQS</a> > Sending a message
+          
+         
+          
+         
+          
+         
+          
+         
+          
+           
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#activityjson">activity.json</a></li>
+    <li><a href="#activitymodulets">activity.module.ts</a></li>
+    <li><a href="#activityts">activity.ts</a></li>
+    <li><a href="#activitygo">activity.go</a></li>
+    <li><a href="#activity-testgo">activity_test.go</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+
+        
+        <div id="body-inner">
+          
+            <h1>Sending a message</h1>
+          
+
+        
+
+
+<p>To send a message to Amazon SQS we'll create a Send Message activity. The API that we follow is documented by <a href="http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html">Amazon</a>.</p>
+<h2 id="activityjson">activity.json</h2>
+<pre><code>{
+    &quot;name&quot;: &quot;sqssendmessage&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;author&quot;: &quot;TIBCO Software Inc.&quot;,
+    &quot;type&quot;: &quot;flogo:activity&quot;,
+    &quot;title&quot;: &quot;Send SQS Message&quot;,
+     
+    &quot;display&quot;: {
+       &quot;category&quot;: &quot;AWSSQS&quot;,
+       &quot;visible&quot;: true,
+       &quot;smallIcon&quot;: &quot;sqssendmessage.png&quot;,
+       &quot;description&quot;: &quot;This activity sends a message to the standard queue&quot;
+    },
+ 
+    &quot;ref&quot;: &quot;github.com/TIBCOSoftware/tci-flogo/samples/extensions/AWSSQS/activity/sqssendmessage&quot;,
+    &quot;inputs&quot;: [
+           {
+            &quot;name&quot;: &quot;sqsConnection&quot;,
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: true,
+            &quot;display&quot;:{
+              &quot;name&quot;: &quot;SQS Connection&quot;,
+              &quot;description&quot;: &quot;Select SQS Connection&quot;,
+              &quot;type&quot;: &quot;connection&quot;
+            },
+            &quot;allowed&quot;:[]
+           },
+           {
+            &quot;name&quot;: &quot;queueUrl&quot;,
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;required&quot;: true,
+            &quot;display&quot;:{
+              &quot;name&quot;: &quot;Queue URL&quot;,
+              &quot;description&quot;: &quot;Select Queue URL&quot;
+            },
+            &quot;allowed&quot;:[]
+           },
+           {
+            &quot;name&quot;: &quot;MessageAttributeNames&quot;,
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;required&quot;: false,
+            &quot;display&quot;: {
+               &quot;name&quot;: &quot;Message Attributes&quot;,
+               &quot;description&quot;: &quot;Set message attributes&quot;,
+               &quot;type&quot;: &quot;table&quot;,
+               &quot;schema&quot;: &quot;{\r\n    \&quot;$schema\&quot;: \&quot;http:\/\/json-schema.org\/draft-04\/schema#\&quot;,\r\n    \&quot;definitions\&quot;: {},\r\n    \&quot;id\&quot;: \&quot;http:\/\/example.com\/example.json\&quot;,\r\n    \&quot;items\&quot;: {\r\n        \&quot;id\&quot;: \&quot;\/items\&quot;,\r\n        \&quot;properties\&quot;: {\r\n            \&quot;Name\&quot;: {\r\n                \&quot;id\&quot;: \&quot;\/items\/properties\/Name\&quot;,\r\n                \&quot;type\&quot;: \&quot;string\&quot;\r\n            },\r\n            \&quot;Type\&quot;: {\r\n                \&quot;id\&quot;: \&quot;\/items\/properties\/Type\&quot;,\r\n                \&quot;type\&quot;: {\&quot;enum\&quot;:[\&quot;String\&quot;, \&quot;Number\&quot;]}\r\n            }\r\n        },\r\n        \&quot;type\&quot;: \&quot;object\&quot;\r\n    },\r\n    \&quot;type\&quot;: \&quot;array\&quot;\r\n}&quot;
+            }
+           },
+           {
+            &quot;name&quot;: &quot;MessageAttributes&quot;,
+            &quot;type&quot;: &quot;complex_object&quot;,
+            &quot;required&quot;: false
+           }, 
+           {
+            &quot;name&quot;: &quot;DelaySeconds&quot;,
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;required&quot;: false
+           },
+           {
+            &quot;name&quot;: &quot;MessageBody&quot;,
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;required&quot;: true
+           }
+    ],
+  
+    &quot;outputs&quot;: [
+           {
+            &quot;name&quot;: &quot;MessageId&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          }
+    ]
+}
+</code></pre><h2 id="activitymodulets">activity.module.ts</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">HttpModule</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;@angular/http&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">NgModule</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;@angular/core&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">CommonModule</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;@angular/common&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">SQSSendMessageActivityContributionHandler</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./activity&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">WiServiceContribution</span>} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;wi-studio/app/contrib/wi-contrib&#34;</span>;
+
+
+<span style="color:#66d9ef">@NgModule</span>({
+  <span style="color:#a6e22e">imports</span><span style="color:#f92672">:</span> [
+  	<span style="color:#a6e22e">CommonModule</span>,
+  	<span style="color:#a6e22e">HttpModule</span>,
+  ],
+  <span style="color:#a6e22e">providers</span><span style="color:#f92672">:</span> [
+    {
+       <span style="color:#a6e22e">provide</span>: <span style="color:#66d9ef">WiServiceContribution</span>,
+       <span style="color:#a6e22e">useClass</span>: <span style="color:#66d9ef">SQSSendMessageActivityContributionHandler</span>
+     }
+  ]
+})
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConcatActivityModule</span> {
+
+}
+</code></pre></div><h2 id="activityts">activity.ts</h2>
+<p>The TypeScript code to fetch the SQS connection and Queue URLs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Observable</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;rxjs/Observable&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Injectable</span>, <span style="color:#a6e22e">Injector</span>, <span style="color:#a6e22e">Inject</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;@angular/core&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Http</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;@angular/http&#34;</span>;
+<span style="color:#66d9ef">import</span> {
+    <span style="color:#a6e22e">WiContrib</span>,
+    <span style="color:#a6e22e">WiServiceHandlerContribution</span>,
+    <span style="color:#a6e22e">IValidationResult</span>,
+    <span style="color:#a6e22e">ValidationResult</span>,
+    <span style="color:#a6e22e">IFieldDefinition</span>,
+    <span style="color:#a6e22e">IActivityContribution</span>,
+    <span style="color:#a6e22e">IConnectorContribution</span>,
+    <span style="color:#a6e22e">WiContributionUtils</span>
+} <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;wi-studio/app/contrib/wi-contrib&#34;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">AWS</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;aws-sdk&#34;</span>;
+
+<span style="color:#66d9ef">@WiContrib</span>({})
+<span style="color:#66d9ef">@Injectable</span>()
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SendMsgActivityContribution</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">WiServiceHandlerContribution</span> {
+    <span style="color:#66d9ef">constructor</span>( <span style="color:#66d9ef">@Inject</span>(<span style="color:#a6e22e">Injector</span>) <span style="color:#a6e22e">injector</span>, <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">http</span>: <span style="color:#66d9ef">Http</span>) {
+        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">injector</span>, <span style="color:#a6e22e">http</span>);
+    }
+
+    <span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">fieldName</span>: <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">context</span>: <span style="color:#66d9ef">IActivityContribution</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">any</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">any</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">fieldName</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;sqsConnection&#34;</span>) {
+            <span style="color:#75715e">//Connector Type must match with the category defined in connector.json
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Observable</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">observer</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+                <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">connectionRefs</span> <span style="color:#f92672">=</span> [];
+                <span style="color:#a6e22e">WiContributionUtils</span>.<span style="color:#a6e22e">getConnections</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">http</span>, <span style="color:#e6db74">&#34;AWSSQS&#34;</span>).<span style="color:#a6e22e">subscribe</span>((<span style="color:#a6e22e">data</span>: <span style="color:#66d9ef">IConnectorContribution</span>[]) <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+                    <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">connection</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+                        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">settings</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+                            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">settings</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">name</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;name&#34;</span>) {
+                                <span style="color:#a6e22e">connectionRefs</span>.<span style="color:#a6e22e">push</span>({
+                                    <span style="color:#e6db74">&#34;unique_id&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">WiContributionUtils</span>.<span style="color:#a6e22e">getUniqueId</span>(<span style="color:#a6e22e">connection</span>),
+                                    <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">settings</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">value</span>
+                                });
+                                <span style="color:#66d9ef">break</span>;
+                            }
+                        }
+                    });
+                    <span style="color:#a6e22e">observer</span>.<span style="color:#a6e22e">next</span>(<span style="color:#a6e22e">connectionRefs</span>);
+                });
+            });
+        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">fieldName</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;MessageAttributes&#34;</span>) {
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">msgAttrNames</span>: <span style="color:#66d9ef">IFieldDefinition</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">getField</span>(<span style="color:#e6db74">&#34;MessageAttributeNames&#34;</span>);
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">msgAttrNames</span>.<span style="color:#a6e22e">value</span>) {
+                <span style="color:#75715e">// Read message attrbutes and construct JSON schema on the fly for the activity input
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">jsonSchema</span> <span style="color:#f92672">=</span> {};
+                <span style="color:#75715e">// Convert string value into JSON object
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">msgAttrNames</span>.<span style="color:#a6e22e">value</span>);
+                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+                    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">data</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;String&#34;</span>) {
+                        <span style="color:#a6e22e">jsonSchema</span>[<span style="color:#a6e22e">data</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Name</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abc&#34;</span>;
+                    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">data</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;Number&#34;</span>) {
+                        <span style="color:#a6e22e">jsonSchema</span>[<span style="color:#a6e22e">data</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Name</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+                    }
+                }
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">jsonSchema</span>);
+            }
+            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;{}&#34;</span>;
+        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">fieldName</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;queueUrl&#34;</span>) {
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">connectionField</span>: <span style="color:#66d9ef">IFieldDefinition</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">getField</span>(<span style="color:#e6db74">&#34;sqsConnection&#34;</span>);
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">connectionField</span>.<span style="color:#a6e22e">value</span>) {
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Observable</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">observer</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+                    <span style="color:#75715e">//Read connection configuration
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">queueUrls</span> <span style="color:#f92672">=</span> [];
+                    <span style="color:#a6e22e">WiContributionUtils</span>.<span style="color:#a6e22e">getConnection</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">http</span>, <span style="color:#a6e22e">connectionField</span>.<span style="color:#a6e22e">value</span>)
+                        .<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">data</span>)
+                        .<span style="color:#a6e22e">subscribe</span>(<span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+                            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">accessKeyId</span>: <span style="color:#66d9ef">IFieldDefinition</span>;
+                            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">secreteKey</span>: <span style="color:#66d9ef">IFieldDefinition</span>;
+                            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">region</span>: <span style="color:#66d9ef">IFieldDefinition</span>;
+
+                            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">configuration</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">settings</span>) {
+                                <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">configuration</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;accessKeyId&#34;</span>) {
+                                    <span style="color:#a6e22e">accessKeyId</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">configuration</span>
+                                } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">configuration</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;secreteAccessKey&#34;</span>) {
+                                    <span style="color:#a6e22e">secreteKey</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">configuration</span>
+                                } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">configuration</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;region&#34;</span>) {
+                                    <span style="color:#a6e22e">region</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">configuration</span>
+                                }
+                            }
+
+                            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sqs</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AWS</span>.<span style="color:#a6e22e">SQS</span>({
+                                <span style="color:#a6e22e">credentials</span>: <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AWS</span>.<span style="color:#a6e22e">Credentials</span>(<span style="color:#a6e22e">accessKeyId</span>.<span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">secreteKey</span>.<span style="color:#a6e22e">value</span>), <span style="color:#a6e22e">region</span>: <span style="color:#66d9ef">region.value</span>
+                            });
+                            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">params</span> <span style="color:#f92672">=</span> {};
+                            <span style="color:#a6e22e">sqs</span>.<span style="color:#a6e22e">listQueues</span>(<span style="color:#a6e22e">params</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">data</span>) {
+                                <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) {
+                                    <span style="color:#a6e22e">observer</span>.<span style="color:#a6e22e">next</span>(<span style="color:#a6e22e">queueUrls</span>);
+                                } <span style="color:#66d9ef">else</span> {
+                                    <span style="color:#a6e22e">observer</span>.<span style="color:#a6e22e">next</span>(<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">QueueUrls</span>);
+                                }
+                            });
+
+                        });
+                }
+                );
+            }
+        }
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+    }
+
+    <span style="color:#a6e22e">validate</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">fieldName</span>: <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">context</span>: <span style="color:#66d9ef">IActivityContribution</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">IValidationResult</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">IValidationResult</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> {
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">fieldName</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;sqsConnection&#34;</span>) {
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">connection</span>: <span style="color:#66d9ef">IFieldDefinition</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">getField</span>(<span style="color:#e6db74">&#34;sqsConnection&#34;</span>)
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span>) {
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ValidationResult</span>.<span style="color:#a6e22e">newValidationResult</span>().<span style="color:#a6e22e">setError</span>(<span style="color:#e6db74">&#34;AWS-SEND-MSG-1000&#34;</span>, <span style="color:#e6db74">&#34;SQS Connection must be configured&#34;</span>);
+            }
+        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">fieldName</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;queueUrl&#34;</span>) {
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">queueUrl</span>: <span style="color:#66d9ef">IFieldDefinition</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">getField</span>(<span style="color:#e6db74">&#34;queueUrl&#34;</span>)
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">queueUrl</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span>) {
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ValidationResult</span>.<span style="color:#a6e22e">newValidationResult</span>().<span style="color:#a6e22e">setError</span>(<span style="color:#e6db74">&#34;AWS-SEND-MSG-1001&#34;</span>, <span style="color:#e6db74">&#34;Queue URL must be configured&#34;</span>);
+            }
+        }
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+    }
+}
+</code></pre></div><h2 id="activitygo">activity.go</h2>
+<p>The runtime code</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">sqssendmessage</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/core/activity&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/core/data&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/logger&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/aws/aws-sdk-go/aws&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/aws/aws-sdk-go/aws/credentials&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/aws/aws-sdk-go/aws/session&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/aws/aws-sdk-go/service/sqs&#34;</span>
+)
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">ivConnection</span>            = <span style="color:#e6db74">&#34;sqsConnection&#34;</span>
+	<span style="color:#a6e22e">ivQueueUrl</span>              = <span style="color:#e6db74">&#34;queueUrl&#34;</span>
+	<span style="color:#a6e22e">ivMessageAttributes</span>     = <span style="color:#e6db74">&#34;MessageAttributes&#34;</span>
+	<span style="color:#a6e22e">ivMessageAttributeNames</span> = <span style="color:#e6db74">&#34;MessageAttributeNames&#34;</span>
+	<span style="color:#a6e22e">ivDelaySeconds</span>          = <span style="color:#e6db74">&#34;DelaySeconds&#34;</span>
+	<span style="color:#a6e22e">ivMessageBody</span>           = <span style="color:#e6db74">&#34;MessageBody&#34;</span>
+	<span style="color:#a6e22e">ovMessageId</span>             = <span style="color:#e6db74">&#34;MessageId&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activityLog</span> = <span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">GetLogger</span>(<span style="color:#e6db74">&#34;aws-activity-sqssendmessage&#34;</span>)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SQSSendMessageActivity</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">metadata</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewActivity</span>(<span style="color:#a6e22e">metadata</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span>) <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Activity</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">SQSSendMessageActivity</span>{<span style="color:#a6e22e">metadata</span>: <span style="color:#a6e22e">metadata</span>}
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SQSSendMessageActivity</span>) <span style="color:#a6e22e">Metadata</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">metadata</span>
+}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SQSSendMessageActivity</span>) <span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">context</span> <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Context</span>) (<span style="color:#a6e22e">done</span> <span style="color:#66d9ef">bool</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">activityLog</span>.<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;Executing SQS Send Message activity&#34;</span>)
+	<span style="color:#75715e">//Read Inputs
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivConnection</span>) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;SQS connection is not configured&#34;</span>, <span style="color:#e6db74">&#34;SQS-SENDMESSAGE-4001&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivQueueUrl</span>) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;SQS Queue URL is not configured&#34;</span>, <span style="color:#e6db74">&#34;SQS-SENDMESSAGE-4002&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivMessageBody</span>) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#e6db74">&#34;Message body is not configured&#34;</span>, <span style="color:#e6db74">&#34;SQS-SENDMESSAGE-4003&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+
+	<span style="color:#75715e">//Read connection details
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">connectionInfo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivConnection</span>).(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#a6e22e">connectionSettings</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">connectionInfo</span>[<span style="color:#e6db74">&#34;settings&#34;</span>].([]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">region</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">accesskey</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">secreteKey</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">connectionSettings</span> {
+		<span style="color:#a6e22e">setting</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;accessKeyId&#34;</span> {
+			<span style="color:#a6e22e">accesskey</span> = <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;value&#34;</span>].(<span style="color:#66d9ef">string</span>)
+		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;region&#34;</span> {
+			<span style="color:#a6e22e">region</span> = <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;value&#34;</span>].(<span style="color:#66d9ef">string</span>)
+		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;secreteAccessKey&#34;</span> {
+			<span style="color:#a6e22e">secreteKey</span> = <span style="color:#a6e22e">setting</span>[<span style="color:#e6db74">&#34;value&#34;</span>].(<span style="color:#66d9ef">string</span>)
+		}
+	}
+	<span style="color:#a6e22e">session</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">NewSession</span>(<span style="color:#a6e22e">aws</span>.<span style="color:#a6e22e">NewConfig</span>().<span style="color:#a6e22e">WithRegion</span>(<span style="color:#a6e22e">region</span>).<span style="color:#a6e22e">WithCredentials</span>(<span style="color:#a6e22e">credentials</span>.<span style="color:#a6e22e">NewStaticCredentials</span>(<span style="color:#a6e22e">accesskey</span>, <span style="color:#a6e22e">secreteKey</span>, <span style="color:#e6db74">&#34;&#34;</span>)))
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Failed to connect to AWS due to error:%s. Check credentials configured in the connection:%s.&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(), <span style="color:#a6e22e">connectionInfo</span>[<span style="color:#e6db74">&#34;name&#34;</span>].(<span style="color:#66d9ef">string</span>)), <span style="color:#e6db74">&#34;SQS-SENDMESSAGE-4004&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+	<span style="color:#75715e">//Create SQS service instance
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">sqsSvc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sqs</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">session</span>)
+	<span style="color:#a6e22e">sendMessageInput</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sqs</span>.<span style="color:#a6e22e">SendMessageInput</span>{}
+	<span style="color:#a6e22e">sendMessageInput</span>.<span style="color:#a6e22e">QueueUrl</span> = <span style="color:#a6e22e">aws</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivQueueUrl</span>).(<span style="color:#66d9ef">string</span>))
+	<span style="color:#a6e22e">sendMessageInput</span>.<span style="color:#a6e22e">MessageBody</span> = <span style="color:#a6e22e">aws</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivMessageBody</span>).(<span style="color:#66d9ef">string</span>))
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivMessageAttributes</span>) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivMessageAttributeNames</span>) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#75715e">//Add message attributes
+</span><span style="color:#75715e"></span>
+		<span style="color:#75715e">//Read mapped values
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">messageAttributes</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivMessageAttributes</span>).(<span style="color:#f92672">*</span><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">ComplexObject</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">messageAttributes</span>.<span style="color:#a6e22e">Value</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">messageAttributes</span>.<span style="color:#a6e22e">Value</span>.(<span style="color:#66d9ef">type</span>) {
+			<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}:
+				<span style="color:#a6e22e">msgAttrs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">messageAttributes</span>.<span style="color:#a6e22e">Value</span>.(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+
+				<span style="color:#75715e">//Read table values
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">attrsName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivMessageAttributeNames</span>).([]<span style="color:#66d9ef">interface</span>{})
+				<span style="color:#a6e22e">attrs</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">sqs</span>.<span style="color:#a6e22e">MessageAttributeValue</span>, len(<span style="color:#a6e22e">msgAttrs</span>))
+				<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">attrsName</span> {
+					<span style="color:#a6e22e">attr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+					<span style="color:#75715e">// Has mapped value??
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">msgAttrs</span>[<span style="color:#a6e22e">attr</span>[<span style="color:#e6db74">&#34;Name&#34;</span>].(<span style="color:#66d9ef">string</span>)] <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+						<span style="color:#a6e22e">attrVal</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">CoerceToString</span>(<span style="color:#a6e22e">msgAttrs</span>[<span style="color:#a6e22e">attr</span>[<span style="color:#e6db74">&#34;Name&#34;</span>].(<span style="color:#66d9ef">string</span>)])
+						<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">attr</span>[<span style="color:#e6db74">&#34;Type&#34;</span>].(<span style="color:#66d9ef">string</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Number&#34;</span> {
+							<span style="color:#a6e22e">attrVal</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">CoerceToString</span>(int(<span style="color:#a6e22e">msgAttrs</span>[<span style="color:#a6e22e">attr</span>[<span style="color:#e6db74">&#34;Name&#34;</span>].(<span style="color:#66d9ef">string</span>)].(<span style="color:#66d9ef">int64</span>)))
+						}
+						<span style="color:#a6e22e">attrs</span>[<span style="color:#a6e22e">attr</span>[<span style="color:#e6db74">&#34;Name&#34;</span>].(<span style="color:#66d9ef">string</span>)] = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sqs</span>.<span style="color:#a6e22e">MessageAttributeValue</span>{
+							<span style="color:#a6e22e">DataType</span>:    <span style="color:#a6e22e">aws</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">attr</span>[<span style="color:#e6db74">&#34;Type&#34;</span>].(<span style="color:#66d9ef">string</span>)),
+							<span style="color:#a6e22e">StringValue</span>: <span style="color:#a6e22e">aws</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">attrVal</span>),
+						}
+					}
+				}
+				<span style="color:#a6e22e">sendMessageInput</span>.<span style="color:#a6e22e">MessageAttributes</span> = <span style="color:#a6e22e">attrs</span>
+			}
+		}
+	}
+
+	<span style="color:#a6e22e">delaySeconds</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">GetInput</span>(<span style="color:#a6e22e">ivDelaySeconds</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">delaySeconds</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">sendMessageInput</span>.<span style="color:#a6e22e">DelaySeconds</span> = <span style="color:#a6e22e">aws</span>.<span style="color:#a6e22e">Int64</span>(int64(<span style="color:#a6e22e">delaySeconds</span>.(<span style="color:#66d9ef">int</span>)))
+	}
+
+	<span style="color:#75715e">//Send message to SQS
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">response</span>, <span style="color:#a6e22e">err1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sqsSvc</span>.<span style="color:#a6e22e">SendMessage</span>(<span style="color:#a6e22e">sendMessageInput</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err1</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewError</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Failed to send message to SQS due to error:%s&#34;</span>, <span style="color:#a6e22e">err1</span>.<span style="color:#a6e22e">Error</span>()), <span style="color:#e6db74">&#34;SQS-SENDMESSAGE-4005&#34;</span>, <span style="color:#66d9ef">nil</span>)
+	}
+
+	<span style="color:#75715e">//Set Message ID in the output
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">SetOutput</span>(<span style="color:#a6e22e">ovMessageId</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">MessageId</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h2 id="activity-testgo">activity_test.go</h2>
+<p>The unit tests</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * Copyright © 2017. TIBCO Software Inc.
+</span><span style="color:#75715e"> * This file is subject to the license terms contained
+</span><span style="color:#75715e"> * in the license file that is distributed with this file.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">sqssendmessage</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+	<span style="color:#e6db74">&#34;testing&#34;</span>
+
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-contrib/action/flow/test&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/TIBCOSoftware/flogo-lib/core/activity&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/stretchr/testify/assert&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activityMetadata</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span>
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">connectionData</span> = <span style="color:#e6db74">`</span><span style="color:#e6db74">`</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getActivityMetadata</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">Metadata</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">activityMetadata</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">jsonMetadataBytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;activity.json&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			panic(<span style="color:#e6db74">&#34;No Json Metadata found for activity.json path&#34;</span>)
+		}
+		<span style="color:#a6e22e">activityMetadata</span> = <span style="color:#a6e22e">activity</span>.<span style="color:#a6e22e">NewMetadata</span>(string(<span style="color:#a6e22e">jsonMetadataBytes</span>))
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">activityMetadata</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestActivityRegistration</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">act</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewActivity</span>(<span style="color:#a6e22e">getActivityMetadata</span>())
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">act</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#e6db74">&#34;Activity Not Registered&#34;</span>)
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fail</span>()
+		<span style="color:#66d9ef">return</span>
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestEval</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">act</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewActivity</span>(<span style="color:#a6e22e">getActivityMetadata</span>())
+	<span style="color:#a6e22e">tc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">test</span>.<span style="color:#a6e22e">NewTestActivityContext</span>(<span style="color:#a6e22e">act</span>.<span style="color:#a6e22e">Metadata</span>())
+
+	<span style="color:#a6e22e">dummyConnectionData</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{})
+	<span style="color:#a6e22e">dummyConnectionSettings</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}, <span style="color:#ae81ff">4</span>)
+	<span style="color:#75715e">//Use your AWS information
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dummyConnectionSettings</span>[<span style="color:#e6db74">&#34;accessKeyId&#34;</span>] = <span style="color:#e6db74">&#34;&lt;YOUR ACCESS KEY ID&gt;&#34;</span>
+	<span style="color:#a6e22e">dummyConnectionSettings</span>[<span style="color:#e6db74">&#34;secreteAccessKey&#34;</span>] = <span style="color:#e6db74">&#34;&lt;YOUR SECRETE ACCESS KEY&gt;&#34;</span>
+	<span style="color:#a6e22e">dummyConnectionSettings</span>[<span style="color:#e6db74">&#34;region&#34;</span>] = <span style="color:#e6db74">&#34;&lt;REGION NAME WHERE SQS IS RUNNING&gt;&#34;</span>
+	<span style="color:#a6e22e">dummyConnectionSettings</span>[<span style="color:#e6db74">&#34;name&#34;</span>] = <span style="color:#e6db74">&#34;My SQS Connection&#34;</span>
+
+	<span style="color:#a6e22e">dummyConnectionData</span>[<span style="color:#e6db74">&#34;settings&#34;</span>] = <span style="color:#a6e22e">dummyConnectionSettings</span>
+
+	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivConnection</span>, <span style="color:#a6e22e">dummyConnectionData</span>)
+	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivQueueUrl</span>, <span style="color:#e6db74">&#34;&lt;YOUR SQS QUEUE URL&gt;&#34;</span>)
+	<span style="color:#a6e22e">tc</span>.<span style="color:#a6e22e">SetInput</span>(<span style="color:#a6e22e">ivMessageBody</span>, <span style="color:#e6db74">&#34;Message from TIBCO&#34;</span>)
+
+	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">act</span>.<span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">tc</span>)
+	<span style="color:#a6e22e">assert</span>.<span style="color:#a6e22e">Nil</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">err</span>)
+}
+</code></pre></div>
+
+<footer class=" footline" >
+	
+</footer>
+
+
+        
+        </div> 
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+        
+            <a class="nav nav-prev" href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-connector/" title="Connector"> <i class="fa fa-chevron-left"></i></a>
+        
+        
+            <a class="nav nav-next" href="/tci-flogo/building-extensions/sample-extensions/amazon-sqs/sqs-receive-message/" title="Receiving a message" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/tci-flogo/js/clipboard.min.js?1575884026"></script>
+    <script src="/tci-flogo/js/perfect-scrollbar.min.js?1575884026"></script>
+    <script src="/tci-flogo/js/perfect-scrollbar.jquery.min.js?1575884026"></script>
+    <script src="/tci-flogo/js/jquery.sticky-kit.min.js?1575884026"></script>
+    <script src="/tci-flogo/js/featherlight.min.js?1575884026"></script>
+    <script src="/tci-flogo/js/html5shiv-printshiv.min.js?1575884026"></script>
+    <script src="/tci-flogo/js/highlight.pack.js?1575884026"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/tci-flogo/js/modernizr.custom.71422.js?1575884026"></script>
+    <script src="/tci-flogo/js/learn.js?1575884026"></script>
+    <script src="/tci-flogo/js/hugo-learn.js?1575884026"></script>
+
+    <link href="/tci-flogo/mermaid/mermaid.css?1575884026" type="text/css" rel="stylesheet" />
+    <script src="/tci-flogo/mermaid/mermaid.js?1575884026"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+
+  </body>
+</html>
+

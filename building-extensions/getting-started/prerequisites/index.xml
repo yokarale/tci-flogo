@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Prerequisites on TIBCO Cloud Integration - Flogo</title>
+    <link>https://tibcosoftware.github.io/tci-flogo/building-extensions/getting-started/prerequisites/</link>
+    <description>Recent content in Prerequisites on TIBCO Cloud Integration - Flogo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 09 Apr 2016 16:50:16 +0200</lastBuildDate>
+    
+	<atom:link href="https://tibcosoftware.github.io/tci-flogo/building-extensions/getting-started/prerequisites/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Use Project Flogo activities</title>
+      <link>https://tibcosoftware.github.io/tci-flogo/building-extensions/getting-started/prerequisites/flogo/</link>
+      <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
+      
+      <guid>https://tibcosoftware.github.io/tci-flogo/building-extensions/getting-started/prerequisites/flogo/</guid>
+      <description>Leveraging the already existing activities built by the Project Flogo community is really easy! Simply zip them up and upload them to TIBCO Cloud™Integration. Let&#39;s say that you want to use the Counter activity from the flogo-contrib repository on GitHub. We&#39;ll walk you through the steps to use that activity
+First you&#39;ll need to download or clone the repository
+git clone https://github.com/TIBCOSoftware/flogo-contrib Now, create a zip file of the counter activity in the activity folder</description>
+    </item>
+    
+    <item>
+      <title>Create new activities</title>
+      <link>https://tibcosoftware.github.io/tci-flogo/building-extensions/getting-started/prerequisites/new-activities/</link>
+      <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
+      
+      <guid>https://tibcosoftware.github.io/tci-flogo/building-extensions/getting-started/prerequisites/new-activities/</guid>
+      <description>Creating new activities for the Flogo in TIBCO Cloud™Integration and/or TIBCO Flogo®Enterprise isn&#39;t hard. Depending on your requirements a new activity requires a bit of Go and possibly a bit of TypeScript. The TIBCO Cloud™Integration - Flogo®and TIBCO Flogo®Enterprise are powered by Project Flogo, so when you&#39;re developing extensions the runtime parts are the same as you would create them for Flogo. That also means that extensions for Flogo will work in TIBCO Cloud™Integration - Flogo®or in TIBCO Flogo®Enterprise and vice versa!</description>
+    </item>
+    
+  </channel>
+</rss>
