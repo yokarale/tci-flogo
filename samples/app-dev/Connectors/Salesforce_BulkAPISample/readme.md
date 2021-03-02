@@ -93,7 +93,7 @@ Click on the MainFlowWithSFCreateCheckStatusJob flow, click on Test Button -> cr
 * if you see 401 Unauthorized error or token refresh error, re-configure the connection.
 
 ## Contributing
-If you want to build your own activities for Flogo please read the docs here, [Flogo-docs] https://tibcosoftware.github.io/flogo/showcases/
+If you want to build your own activities for Flogo please read the docs here, [Flogo-docs](https://tibcosoftware.github.io/flogo/)
 
 If you want to showcase your project, check out [tci-awesome](https://github.com/TIBCOSoftware/tci-awesome)
 
