@@ -1,11 +1,11 @@
-# Salesforce Upsert on multiple records Example
+# Salesforce Creating or Updating Multiple Salesforce Records Example
 
 
 ## Description
 
-This example demonstrate how we can upsert multiple records i,e you can either insert new record or update an existing record according to your own matching criteria/conditional queries.
+This example demonstrate how we can update or create multiple records according to your own matching criteria/conditional queries.
 
-In th Salesforce_UpsertSample app, there are two flows the main flow 'MainFlow_Upsert' having REST trigger which is used to post multiple records for Account object and subflow activity which is calling subflow 'Subflow_Upsert'. In 'Subflow_Upsert' flow we are using conditional branch which specify if from query activity getting one or more records then update those records and if getting null records i,e no record fetched with condition mentioned in query then create new records. In such way we can achieve Upsert.
+In the Salesforce_UpsertSample app, there are two flows the main flow 'MainFlow_Upsert' having REST trigger which is used to post multiple records for Account object and subflow activity which is calling subflow 'Subflow_Upsert'. In 'Subflow_Upsert' flow we are using conditional branch which specify if from query activity getting one or more records then update those records and if getting null records i,e no record fetched with condition mentioned in query then create new records.
 
 ## Prerequisites
 
