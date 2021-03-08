@@ -6,12 +6,12 @@
 This example demonstrate how we can publish plain text messages as well as custom or platform specific messages to a Amazon SNS topic with message attributes. You can send an email or SMS to a mobile phone with type custom message like JSON format set in GCM in this example.
 
 To receive messages published to a topic, you must subscribe an endpoint to the topic. When you subscribe an endpoint to a topic, the endpoint begins to receive messages published to the associated topic. 
-You can only subscribe an endpoint to SNS topic from Amazon Web Service account. For details about how to subscribe an endpoint to a topic, see Amazon SQS documentation.
+You can only subscribe an endpoint to SNS topic from Amazon Web Service account. For details about how to subscribe an endpoint to a topic, see Amazon SNS documentation.
 
 ## Prerequisites
 
 * Ensure that Flogo Connector for Amazon SNS must be install.
-* Before you create a connection with AWS connector, you must have an active Amazon Web Service account with permission to access Amazon SQS. For details about how to use the product, see Amazon SQS documentation.
+* Before you create a connection with AWS connector, you must have an active Amazon Web Service account with permission to access Amazon SNS. For details about how to use the product, see Amazon SNS documentation.
 
 ## Import the sample
 
@@ -24,7 +24,7 @@ You can only subscribe an endpoint to SNS topic from Amazon Web Service account.
 ![Select import](../../import-screenshots/3.png)
 
 4. Browse on your machine or drag and drop the .json file for the app that you want to import.
-![Import your sample](../../import-screenshots/AmazonSNSSample/ImportSQSApp.png)
+![Import your sample](../../import-screenshots/AmazonSNSSample/ImportSNSApp.png)
 
 5. Click Upload. The Import app dialog displays some generic errors and warnings as well as any specific errors or warnings pertaining to the app you are importing. It validates whether all the activities and triggers used in the app are available in the Extensions tab.
 ![The Import app dialog](../../import-screenshots/AmazonSNSSample/ImportDialog.png)
@@ -76,7 +76,7 @@ Now click Execute button.
 ![Runtime Execution](../../import-screenshots/AmazonSNSSample/RESTRequest.png)
 
 If you want to test the sample in the Flow tester then follow below instructions:
-Click on the SQSSend flow, click on Test Button -> create Launch configuration -> provide request schema in body parameter -> click Next button -> click on Run
+Click on the 'AmazonSNSPublishMessage' flow, click on Test Button -> create Launch configuration -> provide request schema in body parameter -> click Next button -> click on Run
 ![FlowTester](../../import-screenshots/AmazonSNSSample/Flowtester.png)
 
 ## Outputs
