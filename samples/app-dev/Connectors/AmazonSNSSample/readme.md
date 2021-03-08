@@ -60,7 +60,7 @@ Note: After imported an app, in the imported connection under Connection tab,
 If you open the app, you will see there is 'AmazonSNSPublishMessage' flow in the AmazonSNSSample app with REST trigger.
 ![The Flows](../../import-screenshots/AmazonSNSSample/Flows.png)
 
-The AmazonSNSPublishMessage flow in the AmazonSNS_Sample app basically publish messages to Amazon SNS topic queue along with message attributes using SNS Publish activity posted using REST trigger. There are two SNS Publish activities used in flow. In the first SNS Publish activity, plain text message is sent to the topic along with message attributes and topic ARN with message you can provide in the input tab of activity. In the second activity, custom message is sent to topic along with message attributes and json message you can see for GCM to which devices and mobile apps may register. 
+The AmazonSNSPublishMessage flow in the AmazonSNS_Sample app basically publish messages to Amazon SNS topic along with message attributes using SNS Publish activity posted using REST trigger. There are two SNS Publish activities used in flow. In the first SNS Publish activity, plain text message is sent to the topic along with message attributes and topic ARN with message you can provide in the input tab of activity. In the second activity, custom message is sent to topic along with message attributes and json message you can see for GCM to which devices and mobile apps may register. 
 ![The AmazonSNSPublishMessage Flows](../../import-screenshots/AmazonSNSSample/AmazonSNSPublishMessageflow.png)
 ![The AmazonSNSPublishMessage1 Flows](../../import-screenshots/AmazonSNSSample/AmazonSNSPublishCustomMessageflow.png)
 
@@ -70,7 +70,7 @@ For running the application, first you have to push the app and then scale up th
 ![After Push App](../../import-screenshots/AmazonSNSSample/AfterPushAppRunningState.png)
 
 Once it reaches to Running state, go to Endpoints, click on Test under Actions and for POST//snspub/{output}, select 'Try it out'
-ou will have to pass value for the path parameter 'output'. You can provide any string type value for 'output' parameter.
+You will have to pass value for the path parameter 'output'. You can provide any string type value for 'output' parameter.
 You will have to pass the values for the request body parameter.
 Now click Execute button.
 ![Runtime Execution](../../import-screenshots/AmazonSNSSample/RESTRequest.png)
