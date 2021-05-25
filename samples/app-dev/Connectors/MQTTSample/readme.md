@@ -1,9 +1,9 @@
-# MQTT Send and Recieve messages on FIFO and Standard queue type Example
+# MQTT Send and Recieve messages over MQTT server Example
 
 
 ## Description
 
-This example demonstrate how we can send the different type of messages to a topic and subscribes to a topic and presents the messages received as output.
+This example demonstrate how we can send the different type of messages to a topic and subscribes to a topic and log the messages received as output.
 
 The flow in the MQTTPUBSUBSample app basically sends different types of messages like string, base64 and JSON to a different topics. The MQTT Subscriber Trigger subscribes to a different topics and presents the messages received as output. When the messages arrive, a new flow is triggered. The example having multiple trigger handlers using MQTT Subscriber.
 
