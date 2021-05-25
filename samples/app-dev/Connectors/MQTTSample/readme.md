@@ -43,7 +43,7 @@ When you import this app, you need to configure the 'MQTT' connection in Connect
 
 Note: After imported an app, in the imported connection under Connection tab,
 * If in the MQTT connection username, password provided then after import such apps, password field is blank and user have to provide password field after import connection. 
-* For the encryption mode TLS-Cert or TLS-ClientAuth, user have to provide CA certificate, Client certificate and Client key. 
+* For the encryption mode TLS-ClientAuth, user have to provide CA certificate, Client certificate and Client key. In this example used TLS-Cert mode so just passed CA certificate.  
 * For this sample, connection used with encryption mode TLS-Cert as the MQTT broker is ssl configured.
 
 ![The connection](../../import-screenshots/MQTTPUBSUBSample/MQTTConnection.png)
