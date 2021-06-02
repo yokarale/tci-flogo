@@ -11,7 +11,7 @@
         "git.tibco.com/git/product/ipaas/wi-mqtt.git/Mqtt/connector/connection"
     ],
     "name": "MQTTPUBSUBSample",
-    "description": "",
+    "description": "MQTT app with MQTT pub activity and Subscriber trigger",
     "version": "1.1.0",
     "type": "flogo:app",
     "appModel": "1.1.1",
@@ -27,7 +27,7 @@
             "id": "MQTTSubBase64",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow describes how to send the different type of messages to a topic and subscribes to a topic to receives those messages using MQTT Pub activity and MQTT Subscriber trigger",
                     "settings": {
                         "topic": "/Topic1",
                         "qos": 0,
@@ -75,7 +75,7 @@
             "id": "MQTTSubJSON",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow describes how to send the different type of messages to a topic and subscribes to a topic to receives those messages using MQTT Pub activity and MQTT Subscriber trigger",
                     "settings": {
                         "topic": "/Topic2",
                         "qos": 2,
@@ -129,9 +129,10 @@
             "id": "ReceiveHTTPMessage",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow describes how to send the different type of messages to a topic and subscribes to a topic to receives those messages using MQTT Pub activity and MQTT Subscriber trigger",
                     "settings": {
                         "Method": "GET",
+                        "reqType": "application/json",
                         "Path": "/MQTTPub/{output}",
                         "OutputValidation": false
                     },
@@ -202,7 +203,7 @@
             "id": "MQTTSubString",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow describes how to send the different type of messages to a topic and subscribes to a topic to receives those messages using MQTT Pub activity and MQTT Subscriber trigger",
                     "settings": {
                         "topic": "/Topic3",
                         "qos": 2,
@@ -237,7 +238,7 @@
             "id": "flow:MQTTPUBSUB",
             "data": {
                 "name": "MQTTPUBSUB",
-                "description": "",
+                "description": "This flow describes how to send the different type of messages to a topic and subscribes to a topic to receives those messages using MQTT Pub activity and MQTT Subscriber trigger",
                 "links": [
                     {
                         "id": 1,

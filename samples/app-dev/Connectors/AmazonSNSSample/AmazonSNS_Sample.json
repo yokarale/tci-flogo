@@ -9,7 +9,7 @@
         "git.tibco.com/git/product/ipaas/wi-plugins.git/contributions/AWS/connector"
     ],
     "name": "AmazonSNS_Sample",
-    "description": "",
+    "description": "AmazonSNS app to publish messages to Amazon SNS topics",
     "version": "1.0.0",
     "type": "flogo:app",
     "appModel": "1.1.1",
@@ -31,9 +31,10 @@
             "id": "ReceiveHTTPMessage",
             "handlers": [
                 {
-                    "description": "AmazonSNS pub with Plain Text and Custom type message",
+                    "description": "AmazonSNS publish activity with Plain Text and Custom type messages to Sends a message to an Amazon SNS topic",
                     "settings": {
                         "Method": "POST",
+                        "reqType": "application/json",
                         "Path": "/snspub/{output}",
                         "OutputValidation": false
                     },

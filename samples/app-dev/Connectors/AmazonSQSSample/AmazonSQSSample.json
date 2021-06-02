@@ -13,7 +13,7 @@
         "git.tibco.com/git/product/ipaas/wi-plugins.git/contributions/AWS/connector"
     ],
     "name": "AmazonSQSSample",
-    "description": "",
+    "description": "AmazonSQS app to send and receive messages to Amazon SQS queue",
     "version": "1.0.0",
     "type": "flogo:app",
     "appModel": "1.1.1",
@@ -29,7 +29,7 @@
             "id": "ReceiveSQSMessage",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow have ReceiveSQSMessage trigger to receives messages from the Amazon FIFO queue Service",
                     "settings": {
                         "queueUrl": "https://sqs.us-west-1.amazonaws.com/777281022645/FifoAutomation.fifo",
                         "MaxNumberOfMessages": 5,
@@ -96,9 +96,10 @@
             "id": "ReceiveHTTPMessage",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow having SendSQSMessage activity to send a message to the Amazon FIFO and Standard Queue Service",
                     "settings": {
                         "Method": "POST",
+                        "reqType": "application/json",
                         "Path": "/sqssend/output",
                         "OutputValidation": false
                     },
@@ -164,7 +165,7 @@
             "id": "ReceiveSQSMessage1",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This flow have ReceiveSQSMessage trigger to receives messages from the Amazon Standard type queue Service",
                     "settings": {
                         "queueUrl": "https://sqs.us-west-1.amazonaws.com/777281022645/STDAutomation",
                         "MaxNumberOfMessages": 1,
@@ -207,7 +208,7 @@
             "id": "flow:SQSReceiveFIFO",
             "data": {
                 "name": "SQSReceiveFIFO",
-                "description": "",
+                "description": "This flow have ReceiveSQSMessage trigger to receives messages from the Amazon FIFO queue Service",
                 "links": [
                     {
                         "id": 1,
@@ -272,7 +273,7 @@
             "id": "flow:SQSSend",
             "data": {
                 "name": "SQSSend",
-                "description": "",
+                "description": "This flow having SendSQSMessage activity to send a message to the Amazon FIFO and Standard Queue Service",
                 "links": [
                     {
                         "id": 1,
@@ -469,7 +470,7 @@
             "id": "flow:SQSReceiveSTD",
             "data": {
                 "name": "SQSReceiveSTD",
-                "description": "",
+                "description": "This flow have ReceiveSQSMessage trigger to receives messages from the Amazon Standard type queue Service",
                 "links": [
                     {
                         "id": 1,

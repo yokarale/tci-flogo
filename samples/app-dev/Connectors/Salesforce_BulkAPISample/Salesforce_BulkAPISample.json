@@ -14,7 +14,7 @@
         "git.tibco.com/git/product/ipaas/wi-salesforce.git/src/app/Salesforce/connector"
     ],
     "name": "Salesforce_BulkAPISample",
-    "description": "",
+    "description": "Salesforce Bulk API app for Bulk Query",
     "version": "1.0.0",
     "type": "flogo:app",
     "appModel": "1.1.1",
@@ -36,9 +36,10 @@
             "id": "ReceiveHTTPMessage",
             "handlers": [
                 {
-                    "description": "",
+                    "description": "This Flow have SalesforceCreateJob i,e Bulk Query to fetch bunch of records and then check the status of that created job. Subflow also started in loop to get the bulk query records in the form of pagination",
                     "settings": {
                         "Method": "GET",
+                        "reqType": "application/json",
                         "Path": "/salesforce/{bulk}",
                         "OutputValidation": false
                     },
@@ -99,7 +100,7 @@
             "id": "flow:MainFlowWithSFCreateCheckStatusJob",
             "data": {
                 "name": "MainFlowWithSFCreateCheckStatusJob",
-                "description": "",
+                "description": "This Flow have SalesforceCreateJob i,e Bulk Query to fetch bunch of records and then check the status of that created job. Subflow also started in loop to get the bulk query records in the form of pagination",
                 "links": [
                     {
                         "id": 1,
@@ -315,7 +316,7 @@
             "id": "flow:SubFlowWithSFGetQueryJob",
             "data": {
                 "name": "SubFlowWithSFGetQueryJob",
-                "description": "",
+                "description": "This subflow having SFGetQueryJobResult activity to fetch the query records executed in the Mail flow",
                 "links": [
                     {
                         "id": 1,
