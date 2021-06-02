@@ -40,7 +40,7 @@ The example of the Salesforce_BulkAPISample app includes bulk job activities in 
 ### The Connection
 When you import this app, you need to configure the 'SalesforceBulkAPI' connection in Connections page. It has pre-filled values except Client Secret. You also need to change Client Id with yours.
 
-![The connection](../../import-screenshots/SalesforceBulkAPISample/importedSFConnection.png)
+![The connection](../../import-screenshots/SalesforceBulkAPISample/ImportSFConnection.png)
 
 Note: After imported an app, in the imported connection under Connection tab,
 * Client ID has prefilled value which is the Consumer Key in the Salesforce Account (get it from the Connected Apps section in Salesforce Account).
